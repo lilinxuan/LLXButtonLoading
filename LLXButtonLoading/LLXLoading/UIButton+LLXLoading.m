@@ -35,8 +35,11 @@ static NSString *keyOfMethod; //关联者的索引key-用于获取block
     
 }
 - (void)buttonClick:(UIButton *)button{
-    
-
+    NSLog(@"%ld",_layer.animationKeys.count);
+    //判断动画-如果正在加载就不能点击
+    if (_layer.animationKeys.count>0) {
+        return;
+    }
     //获取关联
     ActionBlock block1 = (ActionBlock)objc_getAssociatedObject(button, &keyOfMethod);
     if(block1){
