@@ -35,7 +35,7 @@ static NSString *keyOfMethod; //关联者的索引key-用于获取block
     
 }
 - (void)buttonClick:(UIButton *)button{
-    NSLog(@"%ld",_layer.animationKeys.count);
+//    NSLog(@"%ld",_layer.animationKeys.count);
     //判断动画-如果正在加载就不能点击
     if (_layer.animationKeys.count>0) {
         return;
@@ -76,16 +76,7 @@ static NSString *keyOfMethod; //关联者的索引key-用于获取block
 
     
 }
-//旋转图片
-- (void)rotateView:(UIImageView *)view
-{
-    CABasicAnimation *rotationAnimation;
-    rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    rotationAnimation.toValue = [NSNumber numberWithFloat:M_PI*2.0];
-    rotationAnimation.duration = 0.8;
-    rotationAnimation.repeatCount = HUGE_VALF;
-    [view.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
-}
+
 
 -(void)setStartColorOne:(UIColor *)startColorOne{
     

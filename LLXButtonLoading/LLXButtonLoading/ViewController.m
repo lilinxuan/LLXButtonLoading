@@ -19,6 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     
     
     btn = [UIButton createBtnWithFrame:CGRectMake(150, 100, 80, 40) actionBlock:^(UIButton *button) {
