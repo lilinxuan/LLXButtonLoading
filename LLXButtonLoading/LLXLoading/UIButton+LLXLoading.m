@@ -21,11 +21,17 @@ static NSString *keyOfMethod; //关联者的索引key-用于获取block
 @dynamic startColorTwo;
 @dynamic lineWidths;
 @dynamic topHeight;
-
+/**
+ *  创建button-类方法
+ *  frame:如果使用的masonry 就直接设置 CGRectZero
+ **/
 + (UIButton *)createBtnWithFrame:(CGRect)frame actionBlock:(ActionBlock)actionBlock{
     
     UIButton *button = [[UIButton alloc]init];
-    button.frame = frame;
+    if (frame.size.height!=0) {
+        button.frame = frame;
+    }
+    
     [button addTarget:button action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     //关联 block
     objc_setAssociatedObject (button , &keyOfMethod, actionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);

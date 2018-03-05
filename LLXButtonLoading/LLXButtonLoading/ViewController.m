@@ -21,7 +21,7 @@
     [super viewDidLoad];
 
     
-    
+//    frame:如果使用的masonry 就直接设置 CGRectZero
     btn = [UIButton createBtnWithFrame:CGRectMake(150, 100, 80, 40) actionBlock:^(UIButton *button) {
 
         [self didSelectBtn:btn];

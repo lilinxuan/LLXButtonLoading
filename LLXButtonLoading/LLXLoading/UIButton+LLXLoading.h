@@ -22,7 +22,10 @@ typedef void (^ActionBlock)(UIButton * _Nullable button);
 
 @interface UIButton (LLXLoading)
 
-
+/**
+ *  创建button-类方法
+ *  frame:如果使用的masonry 就直接设置 CGRectZero
+ **/
 + (UIButton *_Nullable)createBtnWithFrame:(CGRect)frame actionBlock:(ActionBlock _Nullable )actionBlock;
 
 
