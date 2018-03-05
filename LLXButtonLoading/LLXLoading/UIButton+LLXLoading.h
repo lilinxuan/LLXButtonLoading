@@ -26,6 +26,7 @@ typedef void (^ActionBlock)(UIButton * _Nullable button);
 + (UIButton *_Nullable)createBtnWithFrame:(CGRect)frame actionBlock:(ActionBlock _Nullable )actionBlock;
 
 
+
 /**
  *  加载完毕停止旋转
  *  title:停止后button的文字
