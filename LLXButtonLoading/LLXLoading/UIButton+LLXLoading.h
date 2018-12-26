@@ -18,17 +18,14 @@
  **/
 
 #import <UIKit/UIKit.h>
-typedef void (^ActionBlock)(UIButton * _Nullable button);
+typedef void (^LLX_ActionBlock)(UIButton * _Nullable button);
 
 @interface UIButton (LLXLoading)
 
 /**
- *  创建button-类方法
- *  frame:如果使用的masonry 就直接设置 CGRectZero
+ *  绑定button
  **/
-+ (UIButton *_Nullable)createBtnWithFrame:(CGRect)frame actionBlock:(ActionBlock _Nullable )actionBlock;
-
-
+-(void)BindingBtnactionBlock:(LLX_ActionBlock)actionBlock;
 
 /**
  *  加载完毕停止旋转

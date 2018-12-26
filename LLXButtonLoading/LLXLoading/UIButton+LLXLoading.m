@@ -15,47 +15,34 @@ UIColor *_startColorOne;
 UIColor *_startColorTwo;
 NSInteger _lineWidths;
 NSInteger _topHeight;
-static NSString *keyOfMethod; //关联者的索引key-用于获取block
+static NSString *keyOfMethod_btn; //关联者的索引key-用于获取block
 
 @dynamic startColorOne;
 @dynamic startColorTwo;
 @dynamic lineWidths;
 @dynamic topHeight;
+
 /**
- *  创建button-类方法
- *  frame:如果使用的masonry 就直接设置 CGRectZero
+ *  绑定button
  **/
-+ (UIButton *)createBtnWithFrame:(CGRect)frame actionBlock:(ActionBlock)actionBlock{
-    
-    UIButton *button = [[UIButton alloc]init];
-    if (frame.size.height!=0) {
-        button.frame = frame;
-    }
-    
-    [button addTarget:button action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    //关联 block
-    objc_setAssociatedObject (button , &keyOfMethod, actionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    
-    return button;
-    
-    
+-(void)BindingBtnactionBlock:(LLX_ActionBlock)actionBlock{
+    [self addTarget:nil action:@selector(buttonClick) forControlEvents:UIControlEventTouchUpInside];
+    objc_setAssociatedObject (self , &keyOfMethod_btn, actionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
-- (void)buttonClick:(UIButton *)button{
+
+- (void)buttonClick{
 //    NSLog(@"%ld",_layer.animationKeys.count);
     //判断动画-如果正在加载就不能点击
     if (_layer.animationKeys.count>0) {
         return;
     }
-    //获取关联
-    ActionBlock block1 = (ActionBlock)objc_getAssociatedObject(button, &keyOfMethod);
-    if(block1){
-        block1(button);
-    }
-
-    //旋转图片
-    [button setTitle:@"" forState:UIControlStateNormal];
-    [button setImage:nil forState:UIControlStateNormal];
-    [self creatLayerWithStartLoadingButton:button];
+    
+    //旋转
+    [self setTitle:@"" forState:UIControlStateNormal];
+    [self setImage:nil forState:UIControlStateNormal];
+    [self creatLayerWithStartLoadingButton];
+    
+    
 }
 
 
@@ -102,13 +89,13 @@ static NSString *keyOfMethod; //关联者的索引key-用于获取block
 }
 
 
--(void)creatLayerWithStartLoadingButton:(UIButton*)btn{
+-(void)creatLayerWithStartLoadingButton{
     
     
     
     
-    UIColor *backgroundColor = btn.backgroundColor;//获取背景色
-    UIColor *textColor = btn.currentTitleColor;//获取字体色
+    UIColor *backgroundColor = self.backgroundColor;//获取背景色
+    UIColor *textColor = self.currentTitleColor;//获取字体色
     if (_startColorOne) {
         backgroundColor = _startColorOne;
     }
@@ -124,7 +111,7 @@ static NSString *keyOfMethod; //关联者的索引key-用于获取block
         topWid = _topHeight;
     }
     
-    CGRect rect = btn.frame;
+    CGRect rect = self.frame;
     float wid = rect.size.height-topWid*2;
     float x = rect.size.width/2-wid/2;
     
@@ -132,7 +119,7 @@ static NSString *keyOfMethod; //关联者的索引key-用于获取block
     _layer.frame = CGRectMake(x, topWid, wid, wid);
     _layer.backgroundColor = backgroundColor.CGColor;
     
-    [btn.layer addSublayer:_layer];
+    [self.layer addSublayer:_layer];
     //创建圆环
     UIBezierPath *bezierPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(wid/2, wid/2) radius:(wid-lineW*2)/2 startAngle:0 endAngle:M_PI * 2 clockwise:YES];
     //圆环遮罩
@@ -169,6 +156,7 @@ static NSString *keyOfMethod; //关联者的索引key-用于获取block
     
 
     [self animation];
+    [self loadActionBlock];
     
 }
 
@@ -183,6 +171,13 @@ static NSString *keyOfMethod; //关联者的索引key-用于获取block
     [_layer addAnimation:rotationAnimation forKey:@"rotationAnnimation"];
 }
 
+-(void)loadActionBlock{
+    //获取关联
+    LLX_ActionBlock block1 = (LLX_ActionBlock)objc_getAssociatedObject(self, &keyOfMethod_btn);
+    if(block1){
+        block1(self);
+    }
+}
 
 
 

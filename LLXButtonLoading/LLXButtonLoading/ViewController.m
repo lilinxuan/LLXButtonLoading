@@ -9,10 +9,7 @@
 #import "ViewController.h"
 #import "UIButton+LLXLoading.h"
 @interface ViewController ()
-{
-    UIButton *btn;
-    
-}
+
 @end
 
 @implementation ViewController
@@ -20,40 +17,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    
-//    frame:如果使用的masonry 就直接设置 CGRectZero
-    btn = [UIButton createBtnWithFrame:CGRectMake(150, 100, 80, 40) actionBlock:^(UIButton *button) {
-
-        [self didSelectBtn:btn];
-        
-        
-    }];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(120, 100, 120, 50);
     btn.backgroundColor = [UIColor redColor];
     [btn setTitle:@"收藏" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     btn.lineWidths = 3;//设置圆圈宽度
-    btn.topHeight = 5;//距离上下的边距
+    btn.topHeight = 8;//距离上下的边距
     [self.view addSubview:btn];
+    
+    [btn BindingBtnactionBlock:^(UIButton * _Nullable button) {
+        [self didSelectBtn:button];
+    }];
     
     
 }
 -(void)didSelectBtn:(UIButton*)button{
     
-    if ([button.currentTitle isEqualToString:@"收藏"]) {
-        //请求收藏-延时1秒模拟请求数据~
-        
+    button.selected =! button.selected;
+    
+    if (button.selected) {
+
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             //请求成功
             [button stopLoading:@"已收藏" textColor:[UIColor grayColor] backgroundColor:RGBA(222, 222, 222, 1)];
         });
     }else{
         
-        //取消收藏
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             //请求成功
             [button stopLoading:@"收藏" textColor:[UIColor whiteColor] backgroundColor:[UIColor redColor]];
         });
-        
     }
     
     
