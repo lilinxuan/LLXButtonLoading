@@ -3,7 +3,7 @@
 
 使用方法
 
-    //一句代码调用
+    //一句代码调用 （下载demo一看便知）
     [btn BindingBtnactionBlock:^(UIButton * _Nullable button) {
         [self didSelectBtn:button];
     }];
