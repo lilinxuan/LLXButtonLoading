@@ -26,7 +26,7 @@ static NSString *keyOfMethod_btn; //关联者的索引key-用于获取block
  *  绑定button
  **/
 -(void)BindingBtnactionBlock:(LLX_ActionBlock)actionBlock{
-    [self addTarget:nil action:@selector(buttonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self addTarget:self action:@selector(buttonClick) forControlEvents:UIControlEventTouchUpInside];
     objc_setAssociatedObject (self , &keyOfMethod_btn, actionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
